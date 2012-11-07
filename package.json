@@ -1,7 +1,10 @@
 {
-  "dependencies": {
-    "ansi-color": "~0.2.1",
-    "underscore": "~1.4.2",
-    "node-getopt": "~0.2.1"
-  }
+	"name": "apachelog",
+	"version": "0.0.1",
+	"author": "Andrej Mihajlov <and@codeispoetry.ru>",
+	"dependencies": {
+		"ansi-color": "~0.2.1",
+		"underscore": "~1.4.2",
+		"node-getopt": "~0.2.1"
+	}
 }
