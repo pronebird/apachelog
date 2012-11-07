@@ -58,17 +58,16 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			console.log('Unable to match: %s', str);
 	});
 
-	// descendant sorting for dates
-	var sorted_keys = _.sortBy(_.keys(referrers), function (k) {
+	var sorted_date_keys = _.sortBy(_.keys(referrers), function (k) {
 		return -(+new Date(k));
 	});
 
 	print_strip();
-	
-	_.each(sorted_keys, function (key) {
+
+	_.each(sorted_date_keys, function (key) {
 		var date = key;
 		var counted_urls = _.countBy(referrers[key], function (k) { return k; });
-		var sorted_urls = _.sortBy(_.keys(counted_urls), function (k) {
+		var sorted_url_keys = _.sortBy(_.keys(counted_urls), function (k) {
 			return -counted_urls[k];
 		});
 
@@ -76,7 +75,7 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 		print_strip();
 		print_head();
 
-		_.each(sorted_urls, function (k) {
+		_.each(sorted_url_keys, function (k) {
 			var url = k;
 			if(opt.options.short && url.length > SHORTURL_LENGTH)
 				url = url.substr(0, SHORTURL_LENGTH) + '...';
