@@ -27,7 +27,7 @@ function print_head() {
 	console.log(color('VISITS|   URL ', 'bold'));
 	print_strip();
 }
-console.log(opt);
+
 fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, function (err, data) {
 	var referrers = {};
 
