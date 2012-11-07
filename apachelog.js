@@ -28,6 +28,12 @@ function print_head() {
 	print_strip();
 }
 
+function pad_string(str, num) {
+	var s = '';
+	_.times(num, function () { s += ' '; });
+	return (str + s).substr(0, num);
+}
+
 fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, function (err, data) {
 	var referrers = {};
 
@@ -53,26 +59,31 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 	});
 
 	// descendant sorting for dates
-	var sortedKeys = _.sortBy(_.keys(referrers), function (k) {
+	var sorted_keys = _.sortBy(_.keys(referrers), function (k) {
 		return -(+new Date(k));
 	});
 
 	print_strip();
-	_.each(sortedKeys, function (key) {
+	
+	_.each(sorted_keys, function (key) {
 		var date = key;
-		var values = referrers[key];
-		var counted_urls = _.countBy(values, function (k) { return k; });
+		var counted_urls = _.countBy(referrers[key], function (k) { return k; });
+		var sorted_urls = _.sortBy(_.keys(counted_urls), function (k) {
+			return -counted_urls[k];
+		});
 
 		console.log(color(date, 'black+bold'));
 		print_strip();
 		print_head();
 
-		_.map(counted_urls, function (count, url, list) {
+		_.each(sorted_urls, function (k) {
+			var url = k;
 			if(opt.options.short && url.length > SHORTURL_LENGTH)
 				url = url.substr(0, SHORTURL_LENGTH) + '...';
 
-			console.log('%s |   %s', color((String(count)+"     ").substr(0, 5), 'black+bold'), color(url, 'blue'));
+			console.log('%s |   %s', color(pad_string(counted_urls[k], 5), 'black+bold'), color(url, 'blue'));
 		});
+
 		print_strip();
 	});
 });
