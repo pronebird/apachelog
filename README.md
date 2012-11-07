@@ -10,4 +10,4 @@ Clone repository, run `npm install -d`
 
 Help
 =========
-node apachelog.js -h
+Run `node apachelog.js -h`
