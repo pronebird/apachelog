@@ -17,18 +17,18 @@ var opt = require('node-getopt').create([
 	['h', 'help', 'display this help']
 ]).bindHelp().parseSystem();
 
-function print_strip() {
+function printStripe() {
 	var s = '';
 	_.times(100, function () { s += '-'; });
 	console.log(s);
 }
 
-function print_head() {
+function printHead() {
 	console.log(color('VISITS|   URL ', 'bold'));
-	print_strip();
+	printStripe();
 }
 
-function pad_string(str, num) {
+function padString(str, num) {
 	var s = '';
 	_.times(num, function () { s += ' '; });
 	return (str + s).substr(0, num);
@@ -58,31 +58,31 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			console.log('Unable to match: %s', str);
 	});
 
-	var sorted_date_keys = _.sortBy(_.keys(referrers), function (k) {
+	var sortedDateKeys = _.sortBy(_.keys(referrers), function (k) {
 		return -(+new Date(k));
 	});
 
-	print_strip();
+	printStripe();
 
-	_.each(sorted_date_keys, function (key) {
+	_.each(sortedDateKeys, function (key) {
 		var date = key;
-		var counted_urls = _.countBy(referrers[key], function (k) { return k; });
-		var sorted_url_keys = _.sortBy(_.keys(counted_urls), function (k) {
-			return -counted_urls[k];
+		var countedUrls = _.countBy(referrers[key], function (k) { return k; });
+		var sortedUrlKeys = _.sortBy(_.keys(countedUrls), function (k) {
+			return -countedUrls[k];
 		});
 
 		console.log(color(date, 'black+bold'));
-		print_strip();
-		print_head();
+		printStripe();
+		printHead();
 
-		_.each(sorted_url_keys, function (k) {
+		_.each(sortedUrlKeys, function (k) {
 			var url = k;
 			if(opt.options.short && url.length > SHORTURL_LENGTH)
 				url = url.substr(0, SHORTURL_LENGTH) + '...';
 
-			console.log('%s |   %s', color(pad_string(counted_urls[k], 5), 'black+bold'), color(url, 'blue'));
+			console.log('%s |   %s', color(padString(countedUrls[k], 5), 'black+bold'), color(url, 'blue'));
 		});
 
-		print_strip();
+		printStripe();
 	});
 });
