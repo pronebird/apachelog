@@ -1,7 +1,7 @@
 apachelog
 =========
 
-Simple apache logs viewer command line tool
+Simple apache logs viewer command line tool that shows referrers and number of visits
 
 Install
 =========
