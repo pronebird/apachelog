@@ -24,7 +24,7 @@ function printStripe() {
 }
 
 function printHead() {
-	console.log(color('VISITS|   URL ', 'bold'));
+	console.log(color('VISITS|   Referrer ', 'bold'));
 	printStripe();
 }
 
