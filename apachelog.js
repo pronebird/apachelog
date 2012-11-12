@@ -14,6 +14,7 @@ var opt = require('node-getopt').create([
 	['f', 'file=[FILE]', 'file path (default: ' + LOG_FILE + ')'],
 	['e', 'encoding=[ENCODING]', 'file encoding (default: ' + LOG_ENCODING + ')'],
 	['s', 'short', 'shorten long URLs'],
+	['c', 'colorize', 'Colorize output'],
 	['h', 'help', 'display this help']
 ]).bindHelp().parseSystem();
 
@@ -71,7 +72,11 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			return -countedUrls[k];
 		});
 
-		console.log(color(date, 'black+bold'));
+		if(opt.options.colorize)
+			console.log(color(date, 'black+bold'));
+		else
+			console.log(date);
+
 		printStripe();
 		printHead();
 
@@ -80,7 +85,10 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			if(opt.options.short && url.length > SHORTURL_LENGTH)
 				url = url.substr(0, SHORTURL_LENGTH) + '...';
 
-			console.log('%s |   %s', color(padString(countedUrls[k], 5), 'black+bold'), color(url, 'blue'));
+			if(opt.options.colorize)
+				console.log('%s |   %s', color(padString(countedUrls[k], 5), 'black+bold'), color(url, 'blue'));
+			else
+				console.log('%s |   %s', padString(countedUrls[k], 5), url);
 		});
 
 		printStripe();
