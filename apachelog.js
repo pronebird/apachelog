@@ -35,6 +35,10 @@ function padString(str, num) {
 	return (str + s).substr(0, num);
 }
 
+if(!opt.options.colorize) {
+	color = function (s) { return s; }
+}
+
 fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, function (err, data) {
 	var referrers = {};
 
@@ -72,10 +76,7 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			return -countedUrls[k];
 		});
 
-		if(opt.options.colorize)
-			console.log(color(date, 'black+bold'));
-		else
-			console.log(date);
+		console.log(color(date, 'black+bold'));
 
 		printStripe();
 		printHead();
@@ -85,10 +86,7 @@ fs.readFile(opt.options.file || LOG_FILE, opt.options.encoding || LOG_ENCODING, 
 			if(opt.options.short && url.length > SHORTURL_LENGTH)
 				url = url.substr(0, SHORTURL_LENGTH) + '...';
 
-			if(opt.options.colorize)
-				console.log('%s |   %s', color(padString(countedUrls[k], 5), 'black+bold'), color(url, 'blue'));
-			else
-				console.log('%s |   %s', padString(countedUrls[k], 5), url);
+			console.log('%s |   %s', color(padString(countedUrls[k], 5), 'black+bold'), color(url, 'blue'));
 		});
 
 		printStripe();
