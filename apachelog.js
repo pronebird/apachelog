@@ -3,7 +3,7 @@
 //
 
 var LOG_FILE = 'apache.log';
-var LOG_ENCODING = 'utf-8'
+var LOG_ENCODING = 'utf8'
 var SHORTURL_LENGTH = 80;
 
 var fs = require('fs');
